@@ -1,0 +1,50 @@
+version: '3'
+services:
+  hyperf-skeleton:
+    container_name: naive-ui-php
+    image: hyperf-skeleton
+    build:
+      context: .
+    volumes:
+      - ./:/opt/www
+    ports:
+      - 9501:9501
+    depends_on:
+      - redis
+      - mysql8
+    environment:
+      - APP_ENV=dev  # 生产环境更改为prod
+      - SCAN_CACHEABLE=false #生产环境更改为true
+      - REDIS_HOST=redis
+      - MYSQL_HOST=mysql8
+    networks:
+      - hyperf-skeleton
+    entrypoint: ["./entrypoint.sh", 'server:watch'] # 开发环境启动命令
+#    entrypoint: ["./entrypoint.sh", 'start'] # 生产环境启动命令
+
+  redis:
+    image: redis:latest
+    container_name: redis-server
+#    ports:
+#      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    networks:
+      - hyperf-skeleton
+  mysql8:
+    image: mysql:8
+    container_name: mysql-server
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=job
+      - MYSQL_USER=hyperf
+      - MYSQL_PASSWORD=123456
+    ports:
+      - 3366:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - hyperf-skeleton
+networks:
+  hyperf-skeleton:
+    external: true
