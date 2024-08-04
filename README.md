@@ -18,9 +18,17 @@ git clone https://github.com/lovexjho/naive-admin-php.git
 可本地启动或通过docker启动，
 
 ### 使用docker启动 (推荐)
+
 ```bash
 cd naive-admin-php && docker network create  hyperf-skeleton && docker-compose up
 ```
+
+设置环境变量，复制目录下`.env.example`文件，命名为`.env`文件，打开命令行执行
+
+```bash
+docker exec naive-ui-php  php bin/hyperf.php gen:auth-env
+```
+
 ## 说明
 
 除基础模版接口外，还有一些额外的接口
