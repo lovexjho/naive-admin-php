@@ -29,6 +29,20 @@ cd naive-admin-php && docker network create  hyperf-skeleton && docker-compose u
 docker exec naive-ui-php  php bin/hyperf.php gen:auth-env
 ```
 
+> 本项目中自带了mysql8和redis服务，在docker-compose.yml中定义
+
+配置好数据库连接，执行数据库迁移
+
+```bash
+docker exec naive-ui-php  php bin/hyperf.php migrate
+```
+
+将默认数据导入数据库
+
+```bash
+docker exec naive-ui-php  php bin/hyperf.php db:seed
+```
+
 ## 说明
 
 除基础模版接口外，还有一些额外的接口
